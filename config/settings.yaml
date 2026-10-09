@@ -1,0 +1,15 @@
+# Hardcoded secrets (FAKE) for scanner testing. Do not deploy.
+database:
+  host: db.internal.example.com
+  user: admin
+  password: P@ssw0rd-admin-2024   # hardcoded db password
+
+api:
+  stripe_key: sk_demo_FAKE00abcdefghijklmnopqrstuvwxyz1234
+
+# Fake private key blob - triggers private-key detectors
+private_key: |
+  -----BEGIN RSA PRIVATE KEY-----
+  MIIEowIBAAKCAQEAFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKEFAKE
+  THIS_IS_NOT_A_REAL_KEY_DO_NOT_USE_FOR_ANYTHING_AT_ALL_FAKE00000
+  -----END RSA PRIVATE KEY-----
