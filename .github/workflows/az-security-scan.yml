@@ -1,0 +1,29 @@
+
+  # .github/workflows/az-security-scan.yml
+
+  name: AZ-Security-Scan
+  
+  on:
+    push:
+      branches:
+        - '*'
+    workflow_dispatch:
+  
+  jobs:
+    armourzero_security_test_pre:
+      runs-on: ubuntu-latest
+      
+      env:
+        AZ_API_KEY: "${{ secrets.AZ_TOKEN }}"
+        PROJECT_KEY: "TMrTKPytnrgYXjIsrvzshPpQaVSVrwdw"
+        BRANCH_NAME: "${{ github.ref_name }}"
+        DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+        DOCKER_TOKEN: "${{ secrets.DOCKER_TOKEN }}"
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+  
+        - name: ArmourZero Security Test (Pre)
+          run: |
+            docker login -u $DOCKER_USERNAME -p $DOCKER_TOKEN
+            docker run --pull=always -v "$(pwd):/app/wrk" --rm armourzero/pipe-scan-dev:latest --apikey="$AZ_API_KEY" --projectkey="$PROJECT_KEY" --branch="$BRANCH_NAME" --repo="$GITHUB_REPOSITORY" --runEnv="labs"
